@@ -1,6 +1,6 @@
 # Scripts to help you mount physical Linux drives in WSL
 
-There are all sorts of reasons you might want to have persistent, reliable access to a btrfs/ext4/etc. drive in WSL or Windows. Are are some scripts that will help!
+There are all sorts of reasons you might want to have persistent, reliable access to a btrfs/ext4/etc. drive in WSL or Windows. Here are some scripts that will help!
 
 Here are the broad strokes of what we’re dealing with:
 
