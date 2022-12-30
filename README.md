@@ -18,7 +18,7 @@ Change “`**TASK NAME**`” to whatever you think is appropriate.
 ### Step 1.5: The scheduled task
 The scheduled task shouldn’t actually run on a schedule; mine is scheduled to run just once, at a time in the distant past. The reason it’s a scheduled task is because that’s a technique for executing commands that require admin privileges while bypassing the UAC prompt. Does that look like a healthy operating system security model? That’s not for me to say.
 
-The scheduled task needs to run with “highest privileges”, and it needs to simply call the Powershell script step-2_mount-the-drive.ps1. The name of the task needs to match what you entered in step 1 for “`**TASK NAME**`”.
+The scheduled task needs to run with “highest privileges”, and it needs to simply call the PowerShell script step-2_mount-the-drive.ps1. The name of the task needs to match what you entered in step 1 for “`**TASK NAME**`”.
 
 ### step-2_mount-the-drive.ps1
 This one needs to be customized to specify your hard drive’s model (set the variable `$target` near the top of the file), which you can find in the output of “`GET-CimInstance -query "SELECT * from Win32_DiskDrive"`”. It runs the “`wsl.exe --mount`” command, which allows your hard drive to appear in WSL, probably under `/dev`.
@@ -34,7 +34,7 @@ You want WSL to mount your drive automatically, as soon as it sees it. If it’s
 
 Otherwise, you have a few options: You might write a systemd service, or an fstab entry with the `noauto` flag might work.
 
-Don't get cocky and think you can simply add a "`wsl.exe mount`" command right after the "`wsl.exe --mount`" in your Powershell script. "`wsl.exe --mount`" runs asynchronously, so the hard drive won’t be available yet when your "`wsl.exe mount`" command runs.
+Don't get cocky and think you can simply add a “`wsl.exe mount`” command right after the “`wsl.exe --mount`” in your Powershell script. “`wsl.exe --mount`” runs asynchronously, so the hard drive won’t be available yet when your “`wsl.exe mount`” command runs.
 
 I mean, I guess you could just slap a timer in between, like some sort of animal.
 
