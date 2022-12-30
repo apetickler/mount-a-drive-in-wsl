@@ -4,9 +4,9 @@ There are all sorts of reasons you might want to have persistent, reliable acces
 
 Here are the broad strokes of what we’re dealing with:
 
-* WSL doesn't automatically know about drives that Windows doesn't mount for itself; they have to be passed through using the "wsl.exe --mount" command.
-* "wsl.exe --mount" requires admin privileges, but obviously we want it to happen non-interactively every time WSL boots up.
-* Once that happens, Linux can mount the drive as you would expect.
+* WSL doesn't automatically know about drives that Windows doesn't mount for itself; they have to be passed through using the “`wsl.exe --mount`” command.
+* “`wsl.exe --mount`” requires admin privileges, but obviously we want it to happen non-interactively every time WSL boots up.
+* Once that happens, Linux can mount the drive as you would expect, and Bob’s your proverbial uncle.
 
 Here’s our game plan:
 
