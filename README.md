@@ -8,19 +8,19 @@ Here are the broad strokes of what we’re dealing with:
 * "wsl.exe --mount" requires admin privileges, but obviously we want it to happen non-interactively every time WSL boots up.
 * Once that happens, Linux can mount the drive as you would expect.
 
-Here’s our strategy:
+Here’s our game plan:
 
-###step-1_call-windows-scheduled-task.sh###
+### step-1_call-windows-scheduled-task.sh
 This script does just one thing: It invokes a Windows scheduled task, which you’ll have to create. It should be called each time WSL starts. I call it from the startup script specified in my wsl.conf file.
 
 Change “`**TASK NAME**`” to whatever you think is appropriate.
 
-###Step 1.5: The scheduled task###
+### Step 1.5: The scheduled task
 The scheduled task shouldn’t actually run on a schedule; mine is scheduled to run just once, at a time in the distant past. The reason it’s a scheduled task is because that’s a technique for executing commands that require admin privileges while bypassing the UAC prompt. Does that look like a healthy operating system security model? That’s not for me to say.
 
 The scheduled task needs to run with “highest privileges”, and it needs to simply call the Powershell script step-2_mount-the-drive.ps1. The name of the task needs to match what you entered in step 1 for “`**TASK NAME**`”.
 
-###step-2_mount-the-drive.ps1###
+### step-2_mount-the-drive.ps1
 This one needs to be customized to specify your hard drive’s model (set the variable `$target` near the top of the file), which you can find in the output of “`GET-CimInstance -query "SELECT * from Win32_DiskDrive"`”. It runs the “`wsl.exe --mount`” command, which allows your hard drive to appear in WSL, probably under `/dev`.
 
 The script opens in a conhost window (ew!), so I’ve put some effort into making the output presentable with that in mind. The window will close itself after five seconds if the mount was successful; otherwise it will hang around so you can review the error.
@@ -29,7 +29,7 @@ The script opens in a conhost window (ew!), so I’ve put some effort into makin
 
 Once you’ve gotten this far, you should be able to see your drive listed in the output of `lsblk` under WSL.
 
-###step-3_xx-mount-drive.rules###
+### step-3_xx-mount-drive.rules
 You want WSL to mount your drive automatically, as soon as it sees it. If it’s connected via USB, then I’m guessing your Linux installation is configured to do this without requiring any action on your part.
 
 Otherwise, you have a few options: You might write a systemd service, or an fstab entry with the `noauto` flag might work.
